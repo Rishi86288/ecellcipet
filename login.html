@@ -1,0 +1,67 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login | E-Cell CIPET IPT</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <section class="page-header">
+    <div class="container"><h1>Login to E-Cell</h1></div>
+  </section>
+  <section class="section">
+    <div class="container" style="max-width: 500px;">
+      <div class="card " style="padding:var(--space-4);">
+        <form id="login-form">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn btn-accent btn-block">Login</button>
+        </form>
+      </div>
+    </div>
+  </section>
+ <script type="module">
+  // 1. Import Firebase modules
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  // 2. Paste your Firebase Config here (get this from your Firebase Console)
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "your-app.firebaseapp.com",
+    projectId: "your-app",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // 3. Global Session Listener (Updates UI if logged in)
+  onAuthStateChanged(auth, (user) => {
+    const joinBtn = document.querySelector('.btn-accent'); // Your "Join E-Cell" button
+    if (user) {
+      // User is signed in!
+      if(joinBtn) {
+          joinBtn.innerText = "Dashboard";
+          joinBtn.href = "dashboard.html"; // Redirect to a protected page
+      }
+    } else {
+      // User is signed out
+      if(joinBtn) {
+          joinBtn.innerText = "Login / Join";
+          joinBtn.href = "login.html";
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
